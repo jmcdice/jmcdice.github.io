@@ -70,7 +70,7 @@ theme_mode: dark
 cdn: 
 
 # Avatar for sidebar
-avatar: assets/lib/profile.png
+avatar: ./profile.png
 
 # URL for social preview image
 social_preview_image: 
