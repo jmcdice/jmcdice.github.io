@@ -4,6 +4,8 @@ date: 2024-10-17
 categories: [AI Projects, Content Generation]
 tags: [ai, openai, gpt-4, django, book writing, content creation, python]
 description: Abstracts AI is a Django-based platform that leverages OpenAI's GPT-4 to automate the generation of comprehensive non-fiction books, complete with chapter outlines, content, images, and audio narration.
+image:
+  path: /common/book-detail.png
 ---
 
 # Abstracts AI
@@ -12,8 +14,6 @@ Website:
 [Abstracts AI](https://www.abstracts-ai.com/)
 
 Abstracts AI is an AI-powered platform that automates the generation of non-fiction books. Built with Django and leveraging OpenAI's GPT-4 model, this project transforms book ideas into fully developed works, complete with chapter outlines, detailed content, images, and audio narration.
-
-![Abstracts AI Book Detail](https://www.abstracts-ai.com/static/images/web/landing-page/book-detail.png)
 
 ## Key Features
 
