@@ -1,5 +1,5 @@
 ---
-title: Dispatch Alpha AI-Powered Radio Dispatch System
+title: Dispatch Alpha - AI Powered Radio Dispatch System
 date: 2024-10-17 
 categories: [AI Projects, Radio]
 tags: [ai, raspberry pi, openai, radio, dispatch]
