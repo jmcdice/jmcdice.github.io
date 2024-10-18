@@ -18,7 +18,7 @@ Dispatch Alpha is an intelligent radio dispatch system that integrates Baofeng w
 
 ## Overview
 
-Dispatch Alpha aims add a dispatcher to any channel by introducing AI capabilities from OpenAI to traditional radio systems. Currently using two baofengs and a raspberry pi. You also need an additional baofeng for just listeing in. I'm using these and they're great: 
+Dispatch Alpha aims add a dispatcher or any persona you like, to any channel you like by introducing AI capabilities from OpenAI to traditional radio systems. Currently using two baofengs and a raspberry pi. You also need an additional baofeng for talking to the system. I'm using the following off Amazon and they're great (again, you need 3 minimum): 
 
 [Baofeng Radios](https://www.amazon.com/dp/B0CW2QQGXD) $70 for two radios
 
