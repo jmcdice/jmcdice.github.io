@@ -4,10 +4,11 @@ date: 2024-08-17
 categories: [AI Projects, ASCII Art]
 tags: [python, openai, ollama, ascii art, animation, cli]
 description: ASCII Theater is a Python-based project that creates and displays animated ASCII art movies using AI-generated stories, offering a unique command-line cinematic experience.
+image:
+  path: /common/ascii_screnshot.png
 ---
 
 ![ASCII Theater Scene Window](https://raw.githubusercontent.com/jmcdice/ascii-movie-project/refs/heads/main/images/scene_window.png)
-![ASCII Theater ASCII Screenshot](https://raw.githubusercontent.com/jmcdice/ascii-movie-project/refs/heads/main/images/ascii_screnshot.png)
 
 # ASCII Theater
 
