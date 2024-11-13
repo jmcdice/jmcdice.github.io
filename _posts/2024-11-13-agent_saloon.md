@@ -4,6 +4,8 @@ date: 2024-11-13
 categories: [AI Projects, Multi-Agent Systems, OpenAI Swarm]
 tags: [ai, openai, multi-agent, python, book-writing, swarm]
 description: Harnessing the power of multiple AI agents to collaboratively write comprehensive books - a Python-based system that orchestrates AI agents for creative writing at scale.
+image:
+  path: /common/agent_saloon.png
 ---
 
 Ever wondered what would happen if you could get multiple AI agents to work together like a well-oiled writing team? Me too, also I just wanted to learn OpenAI's Swarm framework/multi-agent systems and collaborative writing, this project orchestrates specialized AI agents to write comprehensive books from start to finish. The best part is watching them colab on it and talk things over, iterating and improving the content until they both agree. Once that's done, each section is written. Also, it has IRC-like ouput which is cool.
