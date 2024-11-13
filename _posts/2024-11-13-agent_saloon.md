@@ -1,5 +1,5 @@
 ---
-title: Agent Saloon - Collaborative Book Writing Using AI Agents
+title: Agent Saloon - Collaborative Book Writing Using OpenAI Swarm Agents
 date: 2024-11-13
 categories: [AI Projects, Multi-Agent Systems, OpenAI Swarm]
 tags: [ai, openai, multi-agent, python, book-writing, swarm]
