@@ -1,5 +1,5 @@
 ---
-title: Agent Saloon - Collaborative Book Writing Using OpenAI Swarm Agents
+title: Agent Saloon - Building a Collaborative AI Writing System with OpenAI's Swarm Framework
 date: 2024-11-13
 categories: [AI Projects, Multi-Agent Systems, OpenAI Swarm]
 tags: [ai, openai, multi-agent, python, book-writing, swarm]
@@ -8,105 +8,410 @@ image:
   path: /common/agent_saloon.png
 ---
 
-Ever wondered what would happen if you could get multiple AI agents to work together like a well-oiled writing team? Me too, also I just wanted to learn OpenAI's Swarm framework/multi-agent systems and collaborative writing, this project orchestrates specialized AI agents to write comprehensive books from start to finish. The best part is watching them colab on it and talk things over, iterating and improving the content until they both agree. Once that's done, each section is written. Also, it has IRC-like ouput which is cool.
 
-What makes Agent Saloon special isn't just that it writes content - plenty of AI tools can do that. The magic happens in the back-and-forth between the agents as they refine ideas together. Instead of just generating text, they actually discuss and debate each piece of content, much like human writers bouncing ideas off each other in a writer's room. They'll challenge each other's suggestions, offer improvements, and only start writing once they've reached a consensus. It's like watching a mini writing team at work, complete with creative discussions and collaborative refinement
+## Introduction
 
-## What It Does
+2025 is shaping up to be the year of AI agents, with new frameworks emerging almost weekly. Among these, OpenAI's Swarm framework stands out for its elegant simplicity. While there are many agent frameworks to choose from, Swarm provides an excellent foundation for understanding how AI agents can work together effectively.
 
-The Agent Saloon coordinates two specialized agents, Zero and Gustave, who work together to create fully-structured books. Here's a glimpse of how they collaborate:
+The example I came up with was to have multiple AI agents to collaborate like a real writing team. Using OpenAI's experimental Swarm framework, I built a system where two AI agents - Zero and Gustave (do you know where that's from?) - work together to write comprehensive books, complete with thoughtful debates and iterations on content. This post walks through that journey, showing how surprisingly straightforward it can be to orchestrate AI collaboration.
 
-```bash
-* Enter a book topic: The ultimate guide to baofeng radios
+[Source Code: Agent Saloon](https://github.com/jmcdice/agent_saloon)
 
-<Zero> How about the title: "Baofeng Mastery: Your Ultimate Guide to Becoming a Radio Pro"?
+## The Collaborative Process in Action
 
-<Gustave> The title could be more compelling. Suggested refinement: "Baofeng Unlocked: 
-A Comprehensive Guide to Mastering the Art of Radio Communication"
+Let's see how our agents work together. When asked to write a book about neural networks, here's how Zero and Gustave collaborate:
 
-* Success: Consensus reached on book title: "Mastering Baofeng: The Ultimate Guide 
-to Radio Communication Excellence"
+```
+<Zero> The original suggestion "Understanding Neural Networks: A Visual Guide for Beginners" 
+is quite descriptive but a bit long. Here's a more engaging and succinct proposal: 
+"Neural Networks Demystified: A Visual Introduction"
+
+<Gustave> The initial proposal captures the essence but could be subtly enhanced 
+for greater impact and appeal. Consider this refined version: 
+"Neural Networks Unveiled: A Beginner's Visual Journey"
 ```
 
-The agents continue this collaborative process throughout the entire book creation, from generating the title, table of contents and writing detailed sections for each chapter.
+Notice how each agent builds on the other's ideas, offering improvements while maintaining a professional and constructive dialogue. This isn't just simple back-and-forth - each agent brings its own personality and perspective:
 
-## The Technical Bits
+- **Zero** is enthusiastic and creative, often making bold initial proposals
+- **Gustave** is refined and eloquent, focusing on polishing and enhancing ideas
 
-If you want to try Agent Saloon yourself, here's what you need to know:
+## Understanding Swarm's Building Blocks
 
-### Quick Start
-```bash
-# Clone and set up
-git clone https://github.com/jmcdice/agent_saloon.git
-cd agent_saloon
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+Before diving into our implementation, let's understand what makes Swarm special. At its core, Swarm provides a lightweight way to orchestrate multiple AI agents, similar to how you might coordinate a team of writers in this implementation. Here are the key concepts:
 
-# Install OpenAI Swarm
-pip install git+https://github.com/openai/swarm.git
+The core primitives are real simple:
+ - Agents with instructions (prompts) and functions they can call
+ - Handoffs between agents
+ - Use Context variables for state management
 
-# Run it
-./main.py
+It's entirely stateless and runs on the Chat Completions API and the implementation focuses on being lightweight and highly controllable.
+
+### Agents as Specialists
+
+Think of agents like team members with specific roles. In our case:
+- **Zero** is the enthusiastic creative writer, making initial proposals
+- **Gustave** is the thoughtful editor, refining and polishing content
+
+Each agent has:
+- Clear instructions about their role and personality
+- The ability to call specific functions (like handing off to another agent)
+- A focused purpose within the larger system
+
+### Agent Prompts: Defining Personality and Purpose
+
+A crucial part of our implementation is how we define each agent's personality and behavior through detailed prompts. Let's look at the title generation prompts as an example, they're long so check the git repo for the full prompts:
+
+```python
+# src/prompts/title_prompts.py
+
+ZERO_TITLE_PROMPT = """
+You are Zero, an enthusiastic and earnest AI assistant who collaborates on book titles.
+When discussing titles:
+1. **Evaluate Previous Suggestions:**
+   - If there is a previous suggestion, evaluate it thoughtfully.
+   - If there is no previous suggestion, propose an initial title idea.
+[...]  # Rest of Zero's prompt
+
+GUSTAVE_TITLE_PROMPT = """
+You are Gustave, a refined and eloquent AI assistant who helps perfect book titles.
+When discussing titles:
+1. **Evaluate Previous Suggestions:**
+   - Carefully assess the proposed title with your sophisticated perspective.
+   - Provide thoughtful feedback.
+[...]  # Rest of Gustave's prompt
 ```
 
-### Key Features
-- Multi-agent collaboration for coherent book writing
-- Smart content organization and management
-- Consensus-driven content refinement
-- Detailed logging of agent interactions
-- Automated chapter and section management
+These prompts demonstrate several key design principles:
 
-### Requirements
-- Python 3.10+
-- OpenAI API key
-- OpenAI Swarm framework
-- Basic Python packages (listed in requirements.txt)
+1. **Clear Role Definition**
+   - Each agent has a distinct personality (Zero: enthusiastic, Gustave: refined)
+   - Specific responsibilities are outlined
+   - Communication protocols are explicitly defined
 
-## Under the Hood
+2. **Structured Response Format**
+   - Consensus indicators (`Consensus: True/False`)
+   - Clear handoff instructions
+   - Standardized output formatting
 
-The magic happens in four main stages:
+3. **Collaborative Guidelines**
+   - How to evaluate previous suggestions
+   - When to reach consensus
+   - How to provide constructive feedback
 
-1. **Initial Planning**: Agents collaborate to develop the book title and structure
-2. **Content Generation**: Systematic creation of chapters and sections
-3. **Refinement**: Iterative improvement through agent consensus
-4. **Final Compilation**: Assembly of all components into a cohesive book
+4. **Safety Mechanisms**
+   - Turn limits to prevent endless debates
+   - Clear formatting requirements
+   - Explicit instructions about avoiding code/function calls
 
-The output is organized like this:
+This structured approach to agent prompting ensures consistent, predictable behavior while maintaining each agent's unique character and purpose.
+
+### Handoffs: The Art of Collaboration
+
+Just like in a real writing room, our agents need to know when to pass the baton. Swarm makes this natural through "handoffs":
+
+```python
+def get_zero(self, instructions, handoff_func):
+    return Agent(
+        name="Zero",
+        instructions=instructions,
+        functions=[handoff_func]
+    )
 ```
-books/your_book_title/
-├── chapters/          # Individual chapters
-├── sections/         # Detailed sections
-├── final_book.md     # Complete compiled book
-├── table_of_contents.txt
-└── title.txt
+
+This simple mechanism allows agents to:
+- Recognize when they need another perspective
+- Smoothly transfer control to their colleague
+- Maintain context throughout the conversation
+
+### Context: Keeping Everyone on the Same Page
+
+Context variables are key to how we keep the conversation going because every agent call to the OpenAI API starts a brand new conversation. While Swarm is stateless (meaning agents don't remember previous conversations), we can pass context variables to keep them informed. It's like having a shared document that everyone can reference:
+
+```python
+response = client.run(
+    agent=current_agent,
+    messages=self.messages,
+    context_variables={
+        'book_title': self.book_title,
+        'full_toc': self.full_toc,
+        'section_number': self.section_number,
+        'section_title': self.section_title
+    }
+)
 ```
 
-## Limitations and Future Plans
+## Building the Collaborative System
 
-Currently, Agent Saloon works best for non-fiction books and technical guides. I'm working on expanding its capabilities to include:
+What makes our implementation interesting, I think, is the agent collaboration. Rather than one agent simply generate content, we created a consensus-driven approach:
 
-- Fiction writing support
-- More specialized agent roles (research, fact-checking, etc.)
-- Custom agent personality profiles
-- Real-time collaboration visualization
-- Export to multiple formats (PDF, EPUB, etc.)
+1. **Clear Roles**: Each agent knows its strengths and responsibilities
+2. **Structured Dialogue**: Agents communicate through a clear protocol, indicating when they agree or want to suggest improvements
+3. **Iterative Refinement**: Content gets polished through multiple rounds of feedback
+4. **Natural Consensus**: Agents work together until they both agree the content is ready
 
-## Try It Yourself
+The finished product ends up being way better.
 
-The code is available on [GitHub](https://github.com/yourusername/agent_saloon) under the MIT license. Feel free to open issues or submit PRs if you have ideas for improvements.
+So, here's what the agent flow looks like for title generation:
 
-## Contributing
+```console
 
-Want to help make Agent Saloon even better? Here are some areas where contributions would be valuable:
+  title_generation/
+  ├── Input Context
+  │   └── book_topic: "Understanding Neural Networks: A Visual Guide for Beginners"
+  │
+  ├── Zero Agent (First Turn)
+  │   ├── Context Received
+  │   │   └── book_topic
+  │   ├── Response Structure
+  │   │   ├── Consensus: False
+  │   │   ├── Content: "Neural Networks Demystified: A Visual Introduction"
+  │   │   └── HANDOFF: Requesting Gustave's feedback
+  │   └── Function Called: _handoff_to_gustave()
+  │
+  ├── Gustave Agent
+  │   ├── Context Received
+  │   │   ├── book_topic
+  │   │   └── previous_proposal
+  │   ├── Response Structure
+  │   │   ├── Consensus: False
+  │   │   ├── Content: "Neural Networks Unveiled: A Beginner's Visual Journey"
+  │   │   └── HANDOFF: Returning to Zero for input
+  │   └── Function Called: _handoff_to_zero()
+  │
+  ├── [Iteration continues...]
+  │   └── Each turn includes:
+  │       ├── Consensus: False/True marker
+  │       ├── Content: New proposal or refinement
+  │       └── HANDOFF: Direction for next agent
+  │
+  └── Final Consensus
+     ├── Agent Response
+     │   ├── Consensus: True
+     │   └── Content: "Discovering Neural Networks: A Visual Guide for Beginners"
+     └── Output
+         └── Write to title.txt
+  
+```
 
-- Adding new agent specializations
-- Improving content generation strategies
-- Enhancing the consensus mechanism
-- Implementing new output formats
+## The Mechanics of Title Generation
 
-Check out the GitHub repository for more details on contributing.
+Let's look under the hood at how our title generation process works. The `TitleGenerator` class orchestrates the entire collaboration between Zero and Gustave:
 
----
+```python
+# High-level structure of the collaboration
+class TitleGenerator:
+    def __init__(self, topic):
+        self.topic = topic
+        self.agents = Agents()
+        self.messages = []
+        self.title = None
+        self._setup_agents()
+```
 
-Interested in exploring the future of collaborative AI writing? Give Agent Saloon a spin and see what kind of books your AI team can create!
+### Setting Up the Writing Team
+
+When we initialize the title generator, it:
+1. Creates our two specialized agents (Zero and Gustave)
+2. Gives each agent their specific instructions
+3. Establishes handoff functions so they can pass control back and forth
+
+```python
+def _setup_agents(self):
+    self.zero_agent = self.agents.get_zero(ZERO_TITLE_PROMPT, self._handoff_to_gustave)
+    self.gustave_agent = self.agents.get_gustave(GUSTAVE_TITLE_PROMPT, self._handoff_to_zero)
+```
+
+### The Generation Loop
+
+The main `generate()` method runs a collaborative loop:
+
+1. **Initial Setup**
+   ```python
+   initial_message = {
+       "role": "user",
+       "content": f"Let's collaborate on a title for a book about: {self.topic}"
+   }
+   ```
+
+2. **Collaboration Process**
+   - Zero proposes an initial title
+   - Gustave reviews and suggests improvements
+   - Agents continue back and forth until consensus
+   - Each response is checked for:
+     - `Consensus: True/False` marker
+     - Content quality
+     - Valid message format
+
+3. **Safety Mechanisms**
+   ```python
+   while attempt_count < max_attempts and consecutive_failures < max_consecutive_failures:
+       # ... collaboration logic ...
+       if 'Consensus: True' in content and self.title:
+           break
+   ```
+
+### Message Processing
+
+Each agent response goes through careful processing:
+
+```python
+def format_message(self, content):
+    # Remove system messages (HANDOFF:, functions.)
+    # Extract consensus markers
+    # Look for "Book Title:" indicators
+    # Clean and format the content
+```
+
+### Error Recovery
+
+The system includes several safety nets:
+- Maximum attempt limits (these are called 'turns')
+- Consecutive failure detection
+- Forced consensus as a last resort (if we hit the max number of turns)
+- Comprehensive error logging
+
+This structured approach ensures that:
+1. Agents maintain focused, productive discussions
+2. The system can recover from issues
+3. We either get a consensus title or a clear error message
+
+## Inside the Consensus Mechanism
+
+The heart of our system lies in how agents work together to reach agreement. Let's look at how this works in practice:
+
+```python
+def write(self):
+    """Generate section content through agent collaboration"""
+    attempt_count = 0
+    max_attempts = SECTION_GENERATION.get("max_attempts", 10)
+    consecutive_failures = 0
+    current_agent = self.zero_agent
+
+    while attempt_count < max_attempts:
+        response = self.agents.client.run(
+            agent=current_agent,
+            messages=self.messages,
+            context_variables={...},
+            max_turns=1
+        )
+```
+
+### Safety Nets and Graceful Fallbacks
+
+There are several mechanisms to ensure robust collaboration (they don't get stuck or get crazy):
+
+1. **Maximum Attempts**: Agents can't debate forever - they have a limited number of turns to reach consensus
+2. **Consecutive Failure Detection**: If something goes wrong multiple times, the system can adapt
+3. **Forced Consensus**: As a last resort, we can take the best content (from the last turn):
+
+```python
+def _force_consensus(self):
+    """When agents can't agree, we use the last good proposal"""
+    for msg in reversed(self.messages):
+        if content := msg.get("content", ""):
+            return content.strip()
+```
+
+### The IRC-Style Interface
+
+One unique aspect of our implementation is the IRC-style logging, which makes the agent interactions visible and engaging:
+
+Note: <screenshot goes here>
+
+
+## The Complete Book Generation Flow
+
+Let's break down how all the components work together to create a book from start to finish. The project structure follows a logical flow that mirrors the book creation process:
+
+```python
+book_creation_flow/
+├── 1. Initial Setup
+│   ├── agents.py          # Agent Class: Defines Zero and Gustave's base capabilities
+│   ├── config.py          # Global settings and configurations
+│   └── irc_logger.py      # IRC Class: Provides IRC-style output for agent interactions
+│
+├── 2. Content Generation Pipeline (these are classes which create the agents for this section of work)
+│   ├── title_generator.py                # Step 1: Collaborative title creation
+│   ├── table_of_contents_generator.py    # Step 2: Structure planning
+│   └── section_writer.py                 # Step 3: Content creation
+│
+└── 3. Prompts (Agent Instructions)
+    ├── title_prompts.py     # Title generation guidelines
+    ├── toc_prompts.py       # Structure planning rules
+    └── section_prompts.py   # Content writing instructions
+```
+
+### The Generation Pipeline
+
+1. **Topic Input → Title Generation**
+   - User provides a book topic
+   - The `TitleGenerator` class orchestrates Zero and Gustave's collaboration
+   - Output: Agreed-upon book title
+
+2. **Title → Table of Contents**
+   - The `TableOfContentsGenerator` class takes the title and topic
+   - Agents debate and refine the book's structure
+   - Output: Hierarchical chapter and section plan
+
+3. **Section-by-Section Writing**
+   - The `SectionWriter` class processes each section in order
+   - For each section:
+     - Zero drafts initial content
+     - Gustave refines and improves
+     - Both iterate until consensus
+   - Output: Complete section content
+
+4. **Book Assembly**
+   - The `BookManager` class manages and combines all generated content
+   - Organizes files in the output directory structure:
+     ```
+     books/book_title/
+     ├── title.txt
+     ├── table_of_contents.txt
+     └── sections/
+         └── section_*.txt
+     ```
+
+Each stage follows the same collaborative pattern we saw in the title generation, but with stage-specific prompts and success criteria. The IRC logger provides visibility into the entire process, making it easy to follow the agents' progress and debug if needed.
+
+## Conclusion: Building a Collaborative AI Writing System with Swarm
+
+We've explored how to build a multi-agent writing system using OpenAI's Swarm framework, taking a unique approach to collaborative AI content creation. Here's what we've learned:
+
+### Key Takeaways
+
+1. **Effective Agent Collaboration**
+   - Zero and Gustave work as a complementary team
+   - Clear roles and personalities drive better outcomes
+   - Structured handoffs enable natural collaboration
+
+2. **Robust Architecture**
+   - Simple but powerful agent primitives
+   - Clear separation of concerns (agents, prompts, generation)
+   - Resilient consensus mechanisms with fallbacks
+
+3. **Practical Implementation Patterns**
+   - IRC-style logging for visibility
+   - Stage-based content generation
+   - Context preservation between handoffs
+
+### Beyond Book Writing
+
+While we've focused on book creation, these patterns could be applied to many collaborative AI tasks:
+- Technical documentation
+- Content review systems
+- Educational material generation
+- Any task requiring multiple perspectives and refinement
+
+### Future Possibilities
+
+Although Swarm is experimental, this implementation demonstrates the potential for:
+- More complex agent interactions
+- Specialized agent roles
+- Sophisticated consensus mechanisms
+- Real-time collaborative content generation
+
+
+So.. what's your next collaborative AI project going to be?
+
