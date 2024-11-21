@@ -324,7 +324,7 @@ Note: <screenshot goes here>
 
 Let's break down how all the components work together to create a book from start to finish. The project structure follows a logical flow that mirrors the book creation process:
 
-```python
+```console
 book_creation_flow/
 ├── 1. Initial Setup
 │   ├── agents.py          # Agent Class: Defines Zero and Gustave's base capabilities
