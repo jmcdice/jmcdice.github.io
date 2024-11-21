@@ -11,9 +11,9 @@ image:
 
 ## Introduction
 
-2025 is shaping up to be the year of AI agents, with new frameworks emerging almost weekly. Among these, OpenAI's Swarm framework stands out for its elegant simplicity. While there are many agent frameworks to choose from, Swarm provides an excellent foundation for understanding how AI agents can work together effectively.
+2025 is shaping up to be the year of AI agents, with lots of frameworks emerging. Too many! I wanted to start easy and OpenAI's Swarm framework stands out for it's simplicity. While there are many agent frameworks to choose from, Swarm provides a great foundation for understanding the fundamentels how AI agents can work together without getting lost in all the options and depth of this new world.
 
-The example I came up with was to have multiple AI agents to collaborate like a real writing team. Using OpenAI's experimental Swarm framework, I built a system where two AI agents - Zero and Gustave (do you know where that's from?) - work together to write comprehensive books, complete with thoughtful debates and iterations on content. This post walks through that journey, showing how surprisingly straightforward it can be to orchestrate AI collaboration.
+The example I came up with was to have multiple AI agents collab, like a real writing team. So, I built a system where two AI agents - Zero and Gustave (do you know where that's from?) - work together to write comprehensive books, complete with thoughtful debates and iterations on content. This post walks through that journey, showing how surprisingly straightforward it can be to orchestrate AI collaboration. All the source is below: 
 
 [Source Code: Agent Saloon](https://github.com/jmcdice/agent_saloon)
 
