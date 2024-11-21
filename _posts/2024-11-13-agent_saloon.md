@@ -315,9 +315,7 @@ def _force_consensus(self):
 
 ### The IRC-Style Interface
 
-One unique aspect of our implementation is the IRC-style logging, which makes the agent interactions visible and engaging:
-
-Note: <screenshot goes here>
+I've always loved IRC: One unique aspect of this implementation is the IRC-style logging - see screenshot at the top. This is just cool.
 
 
 ## The Complete Book Generation Flow
