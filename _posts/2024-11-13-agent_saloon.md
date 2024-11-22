@@ -152,46 +152,57 @@ What makes our implementation interesting, I think, is the agent collaboration. 
 
 The finished product ends up being way better.
 
-So, here's what the agent flow looks like for title generation:
+So, here's what the agent flow looks like for title generation (but this loop is the same for the title, table of contents and the section content):
 
 ```console
 
-  title_generation/
-  ├── Input Context
-  │   └── book_topic: "Understanding Neural Networks: A Visual Guide for Beginners"
+Book Title Generation System
+  ├── TitleGenerator Class Setup
+  │   ├── Initial State
+  │   │   ├── topic: "Understanding Neural Networks: A Visual Guide for Beginners"
+  │   │   ├── messages: []
+  │   │   └── title: None
+  │   └── Agents Initialization
+  │       ├── Zero Setup (ZERO_TITLE_PROMPT)
+  │       └── Gustave Setup (GUSTAVE_TITLE_PROMPT)
   │
-  ├── Zero Agent (First Turn)
-  │   ├── Context Received
-  │   │   └── book_topic
-  │   ├── Response Structure
-  │   │   ├── Consensus: False
-  │   │   ├── Content: "Neural Networks Demystified: A Visual Introduction"
-  │   │   └── HANDOFF: Requesting Gustave's feedback
-  │   └── Function Called: _handoff_to_gustave()
+  ├── Generation Flow with IRC Logging
+  │   ├── Turn 1: Zero
+  │   │   ├── Input: book_topic
+  │   │   ├── Analysis: Initial title creation
+  │   │   ├── Output: "Neural Networks Demystified: A Visual Introduction"
+  │   │   ├── IRC Log: [Zero] Proposing title: Neural Networks Demystified...
+  │   │   └── Action: handoff_to_gustave()
+  │   │
+  │   ├── Turn 2: Gustave
+  │   │   ├── Input: previous_proposal + context
+  │   │   ├── Analysis: Title refinement
+  │   │   ├── Output: "Neural Networks Unveiled: A Beginner's Visual Journey"
+  │   │   ├── IRC Log: [Gustave] Suggesting refinement: Neural Networks Unveiled...
+  │   │   └── Action: handoff_to_zero()
+  │   │
+  │   └── Processing Loop
+  │       ├── Message Formatting
+  │       │   ├── Strip system messages
+  │       │   ├── Extract consensus status
+  │       │   └── Update title if present
+  │       │
+  │       ├── IRC Status Updates
+  │       │   ├── system_message(): General flow updates
+  │       │   ├── agent_message(): Agent responses
+  │       │   ├── success(): Consensus reached
+  │       │   ├── warning(): Force consensus needed
+  │       │   └── error(): Any errors encountered
+  │       │
+  │       └── Consensus Check
+  │           ├── If False: Continue loop
+  │           └── If True: Exit with final title
   │
-  ├── Gustave Agent
-  │   ├── Context Received
-  │   │   ├── book_topic
-  │   │   └── previous_proposal
-  │   ├── Response Structure
-  │   │   ├── Consensus: False
-  │   │   ├── Content: "Neural Networks Unveiled: A Beginner's Visual Journey"
-  │   │   └── HANDOFF: Returning to Zero for input
-  │   └── Function Called: _handoff_to_zero()
-  │
-  ├── [Iteration continues...]
-  │   └── Each turn includes:
-  │       ├── Consensus: False/True marker
-  │       ├── Content: New proposal or refinement
-  │       └── HANDOFF: Direction for next agent
-  │
-  └── Final Consensus
-     ├── Agent Response
-     │   ├── Consensus: True
-     │   └── Content: "Discovering Neural Networks: A Visual Guide for Beginners"
-     └── Output
-         └── Write to title.txt
-  
+  └── Final Output
+      ├── Consensus: True
+      ├── Title: "Discovering Neural Networks: A Visual Guide for Beginners"
+      ├── Status: Success
+      └── IRC Log: [System] Final book title generated: Discovering Neural Networks...
 ```
 
 ## The Mechanics of Title Generation
