@@ -156,7 +156,7 @@ So, here's what the agent flow looks like for title generation (but this loop is
 
 ```console
 
-Book Title Generation System
+Book Title Generation (class)
   ├── TitleGenerator Class Setup
   │   ├── Initial State
   │   │   ├── topic: "Understanding Neural Networks: A Visual Guide for Beginners"
@@ -166,19 +166,19 @@ Book Title Generation System
   │       ├── Zero Setup (ZERO_TITLE_PROMPT)
   │       └── Gustave Setup (GUSTAVE_TITLE_PROMPT)
   │
-  ├── Generation Flow with IRC Logging
+  ├── Generation Flow 
   │   ├── Turn 1: Zero
   │   │   ├── Input: book_topic
   │   │   ├── Analysis: Initial title creation
   │   │   ├── Output: "Neural Networks Demystified: A Visual Introduction"
-  │   │   ├── IRC Log: [Zero] Proposing title: Neural Networks Demystified...
+  │   │   ├── IRC(print): [Zero] Proposing title: Neural Networks Demystified...
   │   │   └── Action: handoff_to_gustave()
   │   │
   │   ├── Turn 2: Gustave
   │   │   ├── Input: previous_proposal + context
   │   │   ├── Analysis: Title refinement
   │   │   ├── Output: "Neural Networks Unveiled: A Beginner's Visual Journey"
-  │   │   ├── IRC Log: [Gustave] Suggesting refinement: Neural Networks Unveiled...
+  │   │   ├── IRC(print): [Gustave] Suggesting refinement: Neural Networks Unveiled...
   │   │   └── Action: handoff_to_zero()
   │   │
   │   └── Processing Loop
@@ -187,7 +187,7 @@ Book Title Generation System
   │       │   ├── Extract consensus status
   │       │   └── Update title if present
   │       │
-  │       ├── IRC Status Updates
+  │       ├── IRC Status Updates (what the user see's)
   │       │   ├── system_message(): General flow updates
   │       │   ├── agent_message(): Agent responses
   │       │   ├── success(): Consensus reached
@@ -202,7 +202,7 @@ Book Title Generation System
       ├── Consensus: True
       ├── Title: "Discovering Neural Networks: A Visual Guide for Beginners"
       ├── Status: Success
-      └── IRC Log: [System] Final book title generated: Discovering Neural Networks...
+      └── IRC(print): [System] Final book title generated: Discovering Neural Networks...
 ```
 
 ## The Mechanics of Title Generation
