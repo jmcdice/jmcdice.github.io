@@ -17,6 +17,19 @@ The example I came up with was to have multiple AI agents collab, like a real wr
 
 [Source Code: Agent Saloon](https://github.com/jmcdice/agent_saloon)
 
+## What is an Agent in Swarm?
+
+It's easy!
+
+An Agent in Swarm consists of:
+
+ - name: String identifier
+ - model: The GPT model to use (default "gpt-4")
+ - instructions: The system prompt/personality (can be string or function)
+ - functions: List of callable functions (including handoff functions)
+ - tool_choice: Optional tool selection parameter
+
+
 ## The Collaborative Process in Action
 
 Let's see how our agents work together. When asked to write a book about neural networks, here's how Zero and Gustave collaborate:
