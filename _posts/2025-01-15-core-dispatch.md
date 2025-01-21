@@ -71,7 +71,7 @@ Disclaimer: This project does not provide legal advice. Use only frequencies you
    ```bash
    python -m venv .venv
    source .venv/bin/activate
-   pip install -r requirements.txt
+   pip install -e .
    ```
 3. **Set Environment Variables**
    ```bash
