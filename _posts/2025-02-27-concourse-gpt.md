@@ -5,7 +5,7 @@ categories: [DevOps, CI/CD, Documentation]
 tags: [concourse, yaml, documentation, ai, bash, pipeline, devops]
 description: Solving the challenge of undocumented, complex Concourse pipelines with an AI-powered tool that generates comprehensive documentation for configurations that often remain untouched for months or years.
 image:
-  path: /common/concourse_gpt.png
+  path: /common/concourse-gpt.png
 ---
 
 # ConcourseGPT: Taming the Beasts of CI/CD Infrastructure
