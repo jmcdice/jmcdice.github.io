@@ -14,8 +14,6 @@ As a lifelong Halo fan, I've always been fascinated by the franchise's rich univ
 
 The result is [Halo-Craft](https://jmcdice.github.io/halo-craft/) - a browser-based game that combines Minecraft's block-building mechanics with the combat elements and aesthetic of the Halo universe.
 
-![Halo-Craft Screenshot](https://jmcdice.github.io/halo-craft/images/halo-craft.png)
-
 ## Building the Game with AI Assistance
 
 What makes this project especially interesting is that it was largely built with AI assistance. Using tools like Claude, Cursor, and GPT-4, I was able to expand upon the foundation of the Minecraft tutorial and implement Halo-inspired features that would have otherwise been far more complex to develop independently.
@@ -32,7 +30,7 @@ The AI assistants were particularly helpful with:
 
 ### Minecraft Elements
 
-The game preserves the core building mechanics that make Minecraft so compelling:
+The game preserves the core building mechanics that make Minecraft so compelling (from Steven Lambert's project):
 
 - **Procedural World Generation** with various biomes (Tundra, Temperate, Jungle, Desert)
 - **Realistic Physics** with collision detection
@@ -126,6 +124,8 @@ const cortanaDialogue = [
 ];
 ```
 
+I feel like there's a lot of potential for Cortana, possibly integrating with a live LLM somehow.
+
 ## CI/CD and Deployment
 
 The game is automatically built and deployed using GitHub Actions. Every commit to the main branch triggers a workflow that:
@@ -146,7 +146,7 @@ Building Halo-Craft wasn't without its challenges:
 - **Projectile Physics** - Implementing satisfying projectile behavior and collision detection
 - **Space Environment Integration** - Making the Halo ring visible from anywhere in the world
 
-Working with AI tools taught me to be precise with my requirements and intentions. Sometimes the AI would misinterpret what I wanted, leading to unexpected behavior that required debugging. However, the ability to quickly iterate and experiment with different approaches made development much faster than it would have been otherwise.
+Working with AI tools taught me to be precise with my requirements and intentions. Sometimes the AI would misinterpret what I wanted, and making a bit of a mess of things, which lead me to always work in feature branches and when it finally figured out what I wanted (sometimes better than expected, eve), I would ask for the precise prompt it would need to one-shot the feature. This was a decent pattern to follow. The ability to quickly iterate and experiment with different approaches made development much faster than it would have been otherwise and sometimes the AI's would give me much better than expected results.
 
 ## Try It Yourself!
 
@@ -161,24 +161,21 @@ You can play Halo-Craft right now in your browser: [https://jmcdice.github.io/ha
 - **MOUSE CLICK** - Shoot plasma bolts
 - **U** - Toggle UI controls
 - **R** - Reset camera
-- **F1** - Save game
-- **F2** - Load game
 
 ## Next Steps
 
 This project is an ongoing labor of love. Some features I'm considering for future updates:
 
-- More enemy types with different attack patterns
+- Campaign mode in addition to battle royal
 - Additional weapon types beyond the plasma rifle
 - Vehicles from the Halo universe
 - More interactive environment elements
-- Sound effects and music to enhance immersion
 
 ## Conclusion
 
-Halo-Craft represents what's possible when combining established game mechanics, modern web technologies, and AI assistance. What started as a learning exercise based on a tutorial evolved into a unique gaming experience that pays homage to two iconic franchises.
+Halo-Craft represents what's possible when combining established game mechanics, modern web technologies, and AI assistance. What started as a learning exercise based on a tutorial and exiting project evolved into a unique gaming experience that pays homage to two iconic franchises.
 
-The source code is available on [GitHub](https://github.com/jmcdice/halo-craft) if you want to explore how it works or contribute to its development. I'd love to hear your feedback and suggestions!
+I'd love to hear your feedback and suggestions!
 
 ---
 
