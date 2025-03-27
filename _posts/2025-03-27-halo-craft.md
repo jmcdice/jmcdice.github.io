@@ -10,7 +10,7 @@ image:
 
 ## When Minecraft Meets Halo: A Web-Based Gaming Experiment
 
-As a lifelong Halo fan, I've always been fascinated by the franchise's rich universe and satisfying combat mechanics. When I discovered a [YouTube tutorial series](https://www.youtube.com/playlist?list=PLtzt35QOXmkKALLv9RzT8oGwN5qwmRjTo) by Steven Lambert on building a Minecraft clone from scratch using JavaScript and Three.js, I immediately saw an opportunity to merge two of my favorite gaming worlds.
+As a lifelong Halo fan, I've always been fascinated by the franchise's rich universe and satisfying combat mechanics. When I discovered a [YouTube tutorial series](https://www.youtube.com/playlist?list=PLtzt35QOXmkKALLv9RzT8oGwN5qwmRjTo) by Dan Greenheck on building a Minecraft clone from scratch using JavaScript and Three.js, I immediately saw an opportunity to merge two of my favorite gaming worlds.
 
 The result is [Halo-Craft](https://jmcdice.github.io/halo-craft/) - a browser-based game that combines Minecraft's block-building mechanics with the combat elements and aesthetic of the Halo universe.
 
@@ -30,7 +30,7 @@ The AI assistants were particularly helpful with:
 
 ### Minecraft Elements
 
-The game preserves the core building mechanics that make Minecraft so compelling (from Steven Lambert's project):
+The game preserves the core building mechanics that make Minecraft so compelling (from Dan Greenheck's project):
 
 - **Procedural World Generation** with various biomes (Tundra, Temperate, Jungle, Desert)
 - **Realistic Physics** with collision detection
