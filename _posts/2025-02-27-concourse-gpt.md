@@ -10,7 +10,13 @@ image:
 
 # ConcourseGPT: Taming the Beasts of CI/CD Infrastructure
 
-In the world of modern CI/CD, Concourse pipelines have become the backbone of many organizations' delivery infrastructure, particularly wrt Cloud Foundry. These YAML configurations orchestrate everything from simple test-and-deploy workflows to complex multi-environment release strategies. But with great power comes a significant challenge: **documentation debt**.
+Concourse pipelines have become the backbone of many organizations' delivery infrastructure, particularly wrt Cloud Foundry. These YAML configurations orchestrate everything from simple test-and-deploy workflows to complex multi-environment release strategies. But with great power comes a significant challenge: **documentation debt**.
+
+## Featured on Cloud Foundry Weekly Podcast
+
+I recently had the opportunity to discuss ConcourseGPT on the Cloud Foundry Weekly podcast. Check out the full conversation below:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xT2JDhRI89g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## The Problem: Concourse Pipeline Sprawl
 
